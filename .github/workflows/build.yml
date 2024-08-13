@@ -45,10 +45,6 @@ jobs:
             }
         
             dotnet tool update dotnet-sonarscanner --tool-path $directoryPath
-      - name: Install dotnet-coverage # not used as not tests exist in backend
-        shell: powershell
-        run: |
-            dotnet tool install --global dotnet-coverage    
           
       - name: Build and analyze
         env:
@@ -58,7 +54,6 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"megha-paliwal-121_react-c-sharp" /o:"megha-paliwal-121-1" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet build "ReactCSharpPractice\ReactCSharpPractice.sln" 
-          #  dotnet dotcover test --collect:"XPlat Code Coverage" --results-directory ./TestResults -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
-          
+          dotnet dotcover test --dcReportType=HTML        
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
           
