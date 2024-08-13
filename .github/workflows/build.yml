@@ -56,4 +56,15 @@ jobs:
           dotnet build "ReactCSharpPractice\ReactCSharpPractice.sln" 
           dotnet dotcover test --dcReportType=HTML        
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+      - name: Analyze with SonarCloud
+        uses: sonarsource/sonarcloud-github-action@<action version> # Ex: v2.1.0, See the latest version at https://github.com/marketplace/actions/sonarcloud-scan
+        with:
+            projectBaseDir: my-custom-directory
+            args: >
+              -Dsonar.organization=megha-paliwal-121-1
+              -Dsonar.python.coverage.reportPaths=coverage.xml
+              -Dsonar.sources=lib/
+              -Dsonar.test.exclusions=tests/**
+              -Dsonar.tests=tests/
+              -Dsonar.verbose=true    
           
